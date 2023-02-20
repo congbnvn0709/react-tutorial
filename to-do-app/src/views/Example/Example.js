@@ -1,35 +1,39 @@
 import React from "react";
 import ChildComponent from "./ChildComponent";
+import FormAdd from "./FormAdd";
 
 class Example extends React.Component {
     state = {
-        firtName: '',
-        lastName: ''
+        showChild: false,
+        listPerson: [
+            { firtName: 'chu', lastName: 'cong' },
+            { firtName: 'nguyen', lastName: 'cong' },
+            { firtName: 'das', lastName: 'cong' },
+            { firtName: 'ggg', lastName: 'cong' },
+        ]
     }
-    handleSubmit = (event) => {
-        event.preventDefault();
-        console.log(this.state);
-    }
-    handleChangeFirstName = (event) => {
+    addNewPerson = (person) => {
         this.setState({
-            firtName: event.target.value
+            listPerson: [...this.state.listPerson, person]
         })
     }
-    handleChangeLastName = (event) => {
+    deletePerson = (persons) => {
         this.setState({
-            lastName: event.target.value
+            listPerson: persons
         })
     }
     render() {
         return <>
-            <form>
-                <label>First name</label><br />
-                <input type='text' value={this.state.firtName} onChange={(event) => this.handleChangeFirstName(event)} /><br />
-                <label>First name</label><br />
-                <input type='text' value={this.state.lastName} onChange={(event) => this.handleChangeLastName(event)} /> <br />
-                <button onClick={(event) => this.handleSubmit(event)}>Submit form</button>
-            </form>
-            <ChildComponent name={'one'} />
+            <FormAdd emitDataAdd={this.addNewPerson} />
+            {this.state.showChild ? (
+                <>
+                    <ChildComponent listPerson={this.state.listPerson} deletePerson={this.deletePerson} />
+                    <p><button onClick={() => this.setState({ showChild: false })}>Hide</button></p>
+                </>
+
+            ) : (
+                <p><button onClick={() => this.setState({ showChild: true })}>Show</button></p>
+            )}
         </>
     }
 }
