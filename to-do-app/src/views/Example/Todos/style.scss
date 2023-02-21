@@ -1,0 +1,9 @@
+.list-todo-content {
+  border: 1px dashed #fff;
+  margin-top: 15px;
+  .todo-child {
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-around;
+  }
+}
